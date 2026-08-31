@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Секреты — никогда не коммитить
+.env
+.env.*
+!.env.example
+
+# Runtime-данные (создаются при запуске)
+chroma_db/
+data/
+cache.json
+logs.db
+*.db
+
+# Экспорты логов
+logs_*.csv
+logs_all_*.csv
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Cursor / локальные артефакты
+.cursor/
+uploads/
+agent-tools/
+*.log
