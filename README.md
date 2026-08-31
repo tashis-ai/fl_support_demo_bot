@@ -133,23 +133,58 @@ Runtime (не в git): `.env`, `chroma_db/`, `cache.json`, `logs.db`, `data/`.
 
 ---
 
-## Docker
+## Деплой на сервер (Docker)
+
+На VPS с установленными Docker и Docker Compose:
 
 ```bash
-cp env.example .env
-# заполните PROXYAPI_API_KEY и TELEGRAM_BOT_TOKEN
+# 1. Клон
+git clone https://github.com/tashis-ai/fl_support_demo_bot.git
+cd fl_support_demo_bot
 
-mkdir -p data
+# 2. Секреты (только на сервере)
+cp env.example .env
+nano .env
+# Обязательно: PROXYAPI_API_KEY, TELEGRAM_BOT_TOKEN
+# TELEGRAM_PROXY на VPS обычно не задают (пусто = напрямую)
+
+# 3. Данные
+mkdir -p data/chroma_db
 echo '{}' > data/cache.json
 touch data/logs.db
 
+# 4. Запуск
 docker compose up -d --build
-docker compose logs -f
+
+# 5. Логи
+docker compose logs -f rag-school-bot
 ```
 
-Тома: `docs/` (только чтение), `data/chroma_db`, `data/cache.json`, `data/logs.db`.
+Проверка: в Telegram напишите боту `/start`.
 
-Long polling — наружные порты не нужны.
+```bash
+docker compose ps
+docker compose restart rag-school-bot
+docker compose down
+```
+
+Обновление:
+
+```bash
+git pull
+docker compose up -d --build
+```
+
+После правок `docs/` на сервере — сбросить векторную базу:
+
+```bash
+docker compose down
+rm -rf data/chroma_db && mkdir -p data/chroma_db
+docker compose up -d
+```
+
+Тома: `docs/` (ro), `data/chroma_db`, `data/cache.json`, `data/logs.db`.  
+Long polling — наружные порты не нужны. `.env` в git не коммитить.
 
 ---
 

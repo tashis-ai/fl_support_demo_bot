@@ -41,11 +41,6 @@ logs_all_*.csv
 Thumbs.db
 desktop.ini
 
-# Docker — только локально, не в git
-Dockerfile
-docker-compose.yml
-docker-compose.yaml
-
 # Cursor / локальные артефакты
 .cursor/
 uploads/
